@@ -27,7 +27,7 @@
             background-size: 24px 24px;
             font-family: 'Helvetica Neue', Arial, sans-serif;
             color: #4A3525;
-            padding-bottom: 80px;
+            -webkit-tap-highlight-color: transparent;
         }
         .app-container {
             max-width: 480px;
@@ -37,6 +37,7 @@
             min-height: 100vh;
             box-shadow: 0 0 20px rgba(0,0,0,0.05);
             position: relative;
+            padding-bottom: 90px;
         }
         .k-card {
             background: white;
@@ -50,11 +51,10 @@
             border-radius: 12px;
             font-weight: bold;
         }
-        /* Toast Notification */
         #toast {
             visibility: hidden;
             min-width: 200px;
-            background-color: #4A3525;
+            background-color: rgba(74, 53, 37, 0.95);
             color: #fff;
             text-align: center;
             border-radius: 12px;
@@ -74,14 +74,21 @@
             opacity: 1;
             top: 50px;
         }
+        input[type="checkbox"].k-checkbox {
+            accent-color: #FF8000;
+            width: 16px;
+            height: 16px;
+        }
+        .modal-overlay {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
     </style>
 </head>
 <body>
 
-<div id="toast"><i class="fa-solid fa-circle-check text-hermes mr-2"></i>行程已更新！</div>
+<div id="toast"><i class="fa-solid fa-circle-check text-hermes mr-2"></i>操作成功！</div>
 
-<div class="app-container relative pb-6">
-    <!-- Header Area -->
+<div class="app-container" id="mainContent">
     <div class="bg-hermes text-snow rounded-b-[40px] p-8 pt-12 shadow-lg mb-6 relative overflow-hidden">
         <div class="absolute -top-10 -right-10 text-snow opacity-20 text-9xl">
             <i class="fa-solid fa-plane-departure"></i>
@@ -95,7 +102,6 @@
         </div>
     </div>
 
-    <!-- Day 1 -->
     <div class="px-4 mb-6">
         <div class="k-card p-5">
             <div class="flex items-center justify-between mb-4 border-b-2 border-bglight pb-2">
@@ -156,14 +162,9 @@
                 <p><i class="fa-solid fa-utensils text-hermes w-5"></i> <b>午餐：</b>Grand View或 Plubpla Buffet 宫廷自助餐 THB250</p>
                 <p><i class="fa-solid fa-utensils text-hermes w-5"></i> <b>晚餐：</b>米其林推薦Ajarn Saiyud's Kitchen THB500</p>
             </div>
-            
-            <div class="mt-4 text-center text-xs text-coffee bg-orange-50 rounded-xl p-2">
-                👗 <b>建議穿著：</b>12月底清邁早晚微涼，建議洋蔥式短袖＋薄外套。 | ☀️ <b>天氣：</b>乾季晴朗舒適。
-            </div>
         </div>
     </div>
 
-    <!-- Day 2 -->
     <div class="px-4 mb-6">
         <div class="k-card p-5">
             <div class="flex items-center justify-between mb-4 border-b-2 border-bglight pb-2">
@@ -226,14 +227,9 @@
                 <p><i class="fa-solid fa-utensils text-hermes w-5"></i> <b>午餐：</b>園區自助餐</p>
                 <p><i class="fa-solid fa-utensils text-hermes w-5"></i> <b>晚餐：</b>米其林推薦-紅橋餐廳THB500</p>
             </div>
-            
-            <div class="mt-4 text-center text-xs text-coffee bg-orange-50 rounded-xl p-2">
-                👗 <b>建議穿著：</b>玩水與市集行程，建議穿著速乾衣物與好走平底鞋。
-            </div>
         </div>
     </div>
 
-    <!-- Day 3 -->
     <div class="px-4 mb-6">
         <div class="k-card p-5">
             <div class="flex items-center justify-between mb-4 border-b-2 border-bglight pb-2">
@@ -272,7 +268,6 @@
         </div>
     </div>
 
-    <!-- Day 4 -->
     <div class="px-4 mb-6">
         <div class="k-card p-5">
             <div class="flex items-center justify-between mb-4 border-b-2 border-bglight pb-2">
@@ -300,7 +295,6 @@
         </div>
     </div>
 
-    <!-- Day 5 -->
     <div class="px-4 mb-8">
         <div class="k-card p-5">
             <div class="flex items-center justify-between mb-4 border-b-2 border-bglight pb-2">
@@ -322,16 +316,15 @@
             </ul>
         </div>
         
-        <div class="text-center mt-6 mb-4 text-coffee text-sm font-bold opacity-70 pb-10">
+        <div class="text-center mt-6 mb-4 text-coffee text-sm font-bold opacity-70 pb-6">
             <p>Made with ❤️ by 小龍</p>
             <p class="mt-1 text-xs">世興旅行社 專屬為您策劃</p>
         </div>
     </div>
 
-    <!-- Bottom Navigation Bar -->
-    <div class="fixed bottom-0 w-full max-w-[480px] bg-white border-t border-gray-100 rounded-t-3xl shadow-[0_-5px_20px_rgba(0,0,0,0.05)] z-50">
-        <div class="flex justify-around items-center p-4 text-coffee">
-            <button class="flex flex-col items-center text-hermes">
+    <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] bg-white border-t border-gray-100 rounded-t-3xl shadow-[0_-5px_20px_rgba(0,0,0,0.05)] z-50">
+        <div class="flex justify-around items-center p-4 text-coffee pb-safe">
+            <button onclick="closeAccounting()" class="flex flex-col items-center hover:text-hermes transition">
                 <i class="fa-solid fa-map-location-dot text-xl mb-1"></i>
                 <span class="text-[10px] font-bold">行程</span>
             </button>
@@ -343,36 +336,358 @@
                 <i class="fa-solid fa-phone text-xl mb-1"></i>
                 <span class="text-[10px] font-bold">導遊</span>
             </button>
-            <button class="flex flex-col items-center opacity-50 hover:opacity-100 hover:text-hermes transition">
-                <i class="fa-solid fa-file-invoice text-xl mb-1"></i>
-                <span class="text-[10px] font-bold">備忘錄</span>
+            <button onclick="toggleAccounting()" class="flex flex-col items-center text-hermes transform hover:scale-110 transition relative">
+                <div class="absolute -top-3 -right-2 bg-red-500 w-3 h-3 rounded-full border-2 border-white"></div>
+                <i class="fa-solid fa-wallet text-xl mb-1"></i>
+                <span class="text-[10px] font-bold">記帳/分帳</span>
             </button>
         </div>
     </div>
 </div>
 
-<script>
-    function showToast() {
+<div id="accountingModal" class="fixed top-0 bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-[60] bg-[#fdf6f0] modal-overlay translate-y-full overflow-y-auto shadow-2xl">
+    <div class="min-h-screen pb-24">
+        <div class="bg-hermes text-snow rounded-b-[30px] p-6 shadow-lg flex justify-between items-center sticky top-0 z-10">
+            <h2 class="text-2xl font-bold"><i class="fa-solid fa-calculator mr-2"></i>分帳小幫手</h2>
+            <button onclick="closeAccounting()" class="text-snow hover:text-orange-200 text-2xl"><i class="fa-solid fa-chevron-down"></i></button>
+        </div>
+
+        <div class="p-4">
+            <div class="k-card p-5 mb-5 shadow-sm">
+                <h3 class="font-bold text-coffee mb-3 border-b border-gray-100 pb-2">新增消費</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-xs text-gray-500 font-bold">消費項目</label>
+                        <input type="text" id="expItem" placeholder="例：嘟嘟車、按摩、晚餐..." class="w-full mt-1 p-2 border border-orange-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-hermes bg-white">
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="flex-1">
+                            <label class="text-xs text-gray-500 font-bold">金額 (THB/TWD)</label>
+                            <input type="number" id="expAmount" placeholder="0" class="w-full mt-1 p-2 border border-orange-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-hermes bg-white">
+                        </div>
+                        <div class="flex-1">
+                            <label class="text-xs text-gray-500 font-bold">誰墊錢？</label>
+                            <select id="expPayer" class="w-full mt-1 p-2 border border-orange-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-hermes bg-white">
+                                <option value="Lee">Lee</option>
+                                <option value="Lin">Lin</option>
+                                <option value="Song">Song</option>
+                                <option value="Wu">Wu</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-2">
+                        <label class="text-xs text-gray-500 font-bold">誰要分攤這筆費用？（預設全選）</label>
+                        <div class="flex flex-wrap gap-2 mt-1">
+                            <label class="flex items-center gap-1 bg-white border border-orange-200 px-3 py-2 rounded-lg text-sm cursor-pointer hover:bg-orange-50">
+                                <input type="checkbox" value="Lee" checked class="k-checkbox split-checkbox"> Lee
+                            </label>
+                            <label class="flex items-center gap-1 bg-white border border-orange-200 px-3 py-2 rounded-lg text-sm cursor-pointer hover:bg-orange-50">
+                                <input type="checkbox" value="Lin" checked class="k-checkbox split-checkbox"> Lin
+                            </label>
+                            <label class="flex items-center gap-1 bg-white border border-orange-200 px-3 py-2 rounded-lg text-sm cursor-pointer hover:bg-orange-50">
+                                <input type="checkbox" value="Song" checked class="k-checkbox split-checkbox"> Song
+                            </label>
+                            <label class="flex items-center gap-1 bg-white border border-orange-200 px-3 py-2 rounded-lg text-sm cursor-pointer hover:bg-orange-50">
+                                <input type="checkbox" value="Wu" checked class="k-checkbox split-checkbox"> Wu
+                            </label>
+                        </div>
+                    </div>
+
+                    <button onclick="addExpense()" class="w-full bg-coffee text-white font-bold py-3 rounded-xl mt-3 hover:bg-opacity-90 shadow-md transition-colors">
+                        <i class="fa-solid fa-plus mr-1"></i> 加入帳單
+                    </button>
+                </div>
+            </div>
+
+            <div class="k-card p-5 mb-5 bg-orange-50 border-orange-200 shadow-sm">
+                <div class="flex justify-between items-center border-b border-orange-200 pb-2 mb-3">
+                    <h3 class="font-bold text-hermes">💰 結算結果</h3>
+                    <button onclick="copyToLine()" class="bg-[#00B900] text-white text-xs px-3 py-1.5 rounded-full font-bold shadow hover:opacity-90 flex items-center transition-opacity">
+                        <i class="fa-brands fa-line mr-1 text-sm"></i> 複製到 LINE
+                    </button>
+                </div>
+                <div id="expSummary" class="text-coffee text-sm space-y-2">
+                    <div class="text-center text-gray-400 py-2">載入中...</div>
+                </div>
+            </div>
+
+            <h3 class="font-bold text-coffee mb-3 pl-2">🧾 帳務明細</h3>
+            <div id="expList" class="space-y-2"></div>
+        </div>
+    </div>
+    <textarea id="lineTextData" class="hidden"></textarea>
+</div>
+
+<script type="module">
+    // 引入 Firebase 核心與 Firestore
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // 🔴 這裡請貼上您在 Firebase 專案中取得的設定檔 🔴
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    // 初始化 Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const expensesCol = collection(db, 'expenses');
+    
+    // 依照加入時間排序
+    const q = query(expensesCol, orderBy('timestamp', 'asc'));
+
+    let expenses = [];
+    const members = ['Lee', 'Lin', 'Song', 'Wu'];
+
+    // 監聽資料庫變化 (即時同步)
+    onSnapshot(q, (snapshot) => {
+        expenses = [];
+        snapshot.forEach((document) => {
+            expenses.push({ id: document.id, ...document.data() });
+        });
+        updateAccountingUI();
+    }, (error) => {
+        console.error("Firebase 連線或權限錯誤 (請確認 Firestore 規則是否開放讀寫):", error);
+        document.getElementById('expSummary').innerHTML = '<div class="text-center text-red-500 py-2">無法載入資料，請確認資料庫設定</div>';
+    });
+
+    // 將函數暴露到全域 window 物件，讓 HTML 的 onclick 可以呼叫
+    window.showToast = function(msg = "行程已更新！") {
         const toast = document.getElementById("toast");
+        toast.innerHTML = `<i class="fa-solid fa-circle-check text-hermes mr-2"></i>${msg}`;
         toast.className = "show";
         setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 2500);
-    }
+    };
 
-    function editSpot(button) {
-        // 找到按鈕旁邊的文字元素
+    // --- 行程編輯 (採用 localStorage 本機記憶) ---
+    // 網頁載入時讀取記憶
+    document.querySelectorAll('.spot-title').forEach((el, index) => {
+        el.dataset.index = index; // 標記編號
+        const savedText = localStorage.getItem('spot_' + index);
+        if(savedText) el.innerText = savedText;
+    });
+
+    window.editSpot = function(button) {
         const titleElement = button.previousElementSibling;
         const currentText = titleElement.innerText;
-        
-        // 彈出對話框讓使用者輸入新名稱
         const newText = prompt("✏️ 請輸入新的景點或行程名稱：", currentText);
-        
-        // 判斷是否有輸入且不為空
         if (newText !== null && newText.trim() !== "") {
-            // 更新文字
             titleElement.innerText = newText.trim();
-            // 顯示成功提示
-            showToast();
+            // 儲存至本機
+            localStorage.setItem('spot_' + titleElement.dataset.index, newText.trim());
+            window.showToast("行程名稱已更新！");
         }
+    };
+
+    // --- 面板控制 ---
+    window.toggleAccounting = function() {
+        const modal = document.getElementById('accountingModal');
+        if (modal.classList.contains('translate-y-full')) {
+            modal.classList.remove('translate-y-full');
+            document.body.style.overflow = 'hidden'; 
+        } else {
+            window.closeAccounting();
+        }
+    };
+
+    window.closeAccounting = function() {
+        const modal = document.getElementById('accountingModal');
+        modal.classList.add('translate-y-full');
+        document.body.style.overflow = ''; 
+    };
+
+    // --- 記帳資料庫操作 ---
+    window.addExpense = async function() {
+        const item = document.getElementById('expItem').value;
+        const amount = parseFloat(document.getElementById('expAmount').value);
+        const payer = document.getElementById('expPayer').value;
+
+        const checkboxes = document.querySelectorAll('.split-checkbox:checked');
+        let sharedBy = Array.from(checkboxes).map(cb => cb.value);
+
+        if (!item || isNaN(amount) || amount <= 0) {
+            alert('⚠️ 請輸入正確的消費項目與金額！');
+            return;
+        }
+
+        if (sharedBy.length === 0) {
+            alert('⚠️ 至少需要選擇一位參與分攤的人！');
+            return;
+        }
+
+        try {
+            // 寫入 Firebase
+            await addDoc(expensesCol, {
+                item: item,
+                amount: amount,
+                payer: payer,
+                sharedBy: sharedBy,
+                timestamp: Date.now()
+            });
+
+            document.getElementById('expItem').value = '';
+            document.getElementById('expAmount').value = '';
+            document.querySelectorAll('.split-checkbox').forEach(cb => cb.checked = true); 
+            window.showToast("已同步至雲端帳單！");
+        } catch (e) {
+            console.error("新增失敗: ", e);
+            alert("新增失敗，請檢查資料庫權限設定！");
+        }
+    };
+
+    window.removeExpense = async function(docId) {
+        if(confirm("確定要刪除這筆紀錄嗎？")){
+            try {
+                // 從 Firebase 刪除
+                await deleteDoc(doc(db, "expenses", docId));
+                window.showToast("已刪除紀錄！");
+            } catch (e) {
+                console.error("刪除失敗: ", e);
+            }
+        }
+    };
+
+    function updateAccountingUI() {
+        const list = document.getElementById('expList');
+        const summary = document.getElementById('expSummary');
+        const lineData = document.getElementById('lineTextData');
+
+        if (expenses.length === 0) {
+            list.innerHTML = '';
+            summary.innerHTML = '<div class="text-center text-gray-400 py-2">尚未有消費紀錄</div>';
+            lineData.value = '';
+            return;
+        }
+
+        list.innerHTML = expenses.map((e) => {
+            const splitText = e.sharedBy.length === 4 ? "全員均攤" : e.sharedBy.join(", ") + " 分攤";
+            // e.id 來自 Firestore 產生的唯一文件 ID
+            return `
+            <div class="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm border border-gray-100">
+                <div class="flex items-center gap-3">
+                    <div class="bg-orange-100 text-hermes w-10 h-10 rounded-full flex items-center justify-center font-bold">
+                        ${e.payer.charAt(0)}
+                    </div>
+                    <div>
+                        <p class="font-bold text-coffee">${e.item}</p>
+                        <p class="text-xs text-gray-500">${e.payer} 墊錢 • ${splitText}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="font-bold text-hermes text-lg">$${e.amount}</div>
+                    <button onclick="window.removeExpense('${e.id}')" class="text-red-300 hover:text-red-500 p-2"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            </div>
+            `;
+        }).join('');
+
+        let total = 0;
+        let paidBy = { Lee: 0, Lin: 0, Song: 0, Wu: 0 }; 
+        let owedBy = { Lee: 0, Lin: 0, Song: 0, Wu: 0 }; 
+        
+        expenses.forEach(e => {
+            total += e.amount;
+            paidBy[e.payer] += e.amount; 
+            
+            const splitAmount = e.amount / e.sharedBy.length;
+            e.sharedBy.forEach(person => {
+                owedBy[person] += splitAmount; 
+            });
+        });
+
+        let summaryHTML = `<div class="mb-3 text-center border-b border-orange-100 pb-2">
+            <span class="text-gray-500 text-xs">旅程總花費</span>
+            <div class="text-2xl font-bold text-hermes">$${total}</div>
+        </div>`;
+        
+        let lineText = `🇹🇭 清邁五日遊 分帳結算 🇹🇭\n\n`;
+        lineText += `💰 總花費：$${total}\n\n`;
+        lineText += `📋 消費明細：\n`;
+        expenses.forEach(e => { 
+            const splitTxt = e.sharedBy.length === 4 ? "全員" : e.sharedBy.join(",");
+            lineText += `- ${e.item}: $${e.amount} (${e.payer}墊付 / ${splitTxt}分攤)\n`; 
+        });
+        lineText += `\n💵 最終結算 (多退少補)：\n`;
+
+        members.forEach(m => {
+            let balance = paidBy[m] - owedBy[m]; 
+            balance = Math.round(balance);
+            const myOwed = Math.round(owedBy[m]);
+
+            let statusText = "";
+            let colorClass = "";
+
+            if (balance > 0) {
+                statusText = `應收回 $${balance}`;
+                colorClass = "text-green-600";
+            } else if (balance < 0) {
+                statusText = `應補繳 $${Math.abs(balance)}`;
+                colorClass = "text-red-500";
+            } else {
+                statusText = `結清`;
+                colorClass = "text-gray-400";
+            }
+            
+            summaryHTML += `<div class="flex justify-between items-center py-2 border-b border-dashed border-orange-100 last:border-0">
+                <div>
+                    <span class="font-bold">${m}</span>
+                    <div class="text-[10px] text-gray-400">總花費: $${myOwed}</div>
+                </div>
+                <span class="font-bold ${colorClass}">${statusText}</span>
+            </div>`;
+            
+            lineText += `${m}: 個人總花費 $${myOwed} ➔ ${statusText}\n`;
+        });
+
+        summary.innerHTML = summaryHTML;
+        lineData.value = lineText;
+    }
+
+    // --- 複製到 LINE ---
+    window.copyToLine = function() {
+        const text = document.getElementById('lineTextData').value;
+        if (!text) {
+            alert('目前沒有帳務紀錄可複製！請先新增消費。');
+            return;
+        }
+        
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).then(() => {
+                window.showToast("已複製分帳資訊！可直接貼到 LINE");
+            }).catch(err => fallbackCopyTextToClipboard(text));
+        } else {
+            fallbackCopyTextToClipboard(text);
+        }
+    };
+
+    function fallbackCopyTextToClipboard(text) {
+        const textArea = document.getElementById('lineTextData');
+        textArea.classList.remove('hidden');
+        textArea.style.position = 'fixed';
+        textArea.style.top = '0';
+        textArea.style.left = '0';
+        textArea.style.width = '2em';
+        textArea.style.height = '2em';
+        textArea.style.padding = '0';
+        textArea.style.border = 'none';
+        textArea.style.outline = 'none';
+        textArea.style.boxShadow = 'none';
+        textArea.style.background = 'transparent';
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            window.showToast("已複製分帳資訊！可直接貼到 LINE");
+        } catch (err) {
+            alert('無法複製，請手動圈選文字。');
+        }
+        textArea.classList.add('hidden');
     }
 </script>
 
