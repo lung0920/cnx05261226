@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>清邁五日專屬行程 - 世興旅行社策劃</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        hermes: '#FF8000',
+                        snow: '#FFFFFF',
+                        coffee: '#4A3525',
+                        bglight: '#fdf6f0'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fdf6f0;
+            background-image: radial-gradient(#FF8000 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #4A3525;
+            padding-bottom: 80px;
+        }
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(5px);
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .k-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 8px 20px rgba(255, 128, 0, 0.08);
+            border: 2px solid #fff;
+        }
+        .tag {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+        /* Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #4A3525;
+            color: #fff;
+            text-align: center;
+            border-radius: 12px;
+            padding: 12px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            top: 30px;
+            transform: translateX(-50%);
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transition: opacity 0.3s, top 0.3s;
+        }
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="toast"><i class="fa-solid fa-circle-check text-hermes mr-2"></i>行程已更新！</div>
+
+<div class="app-container relative pb-6">
+    <!-- Header Area -->
+    <div class="bg-hermes text-snow rounded-b-[40px] p-8 pt-12 shadow-lg mb-6 relative overflow-hidden">
+        <div class="absolute -top-10 -right-10 text-snow opacity-20 text-9xl">
+            <i class="fa-solid fa-plane-departure"></i>
+        </div>
+        <h1 class="text-3xl font-extrabold mb-2 relative z-10">清邁悠閒五日遊</h1>
+        <p class="text-lg opacity-90 relative z-10"><i class="fa-solid fa-user-group mr-2"></i>ATTN: 陳媽</p>
+        <div class="mt-4 flex flex-wrap gap-2 relative z-10">
+            <span class="bg-snow text-hermes px-3 py-1 rounded-full text-sm font-bold shadow">出發: 2026/12/26</span>
+            <span class="bg-snow text-hermes px-3 py-1 rounded-full text-sm font-bold shadow">人數: 10 PAX</span>
+            <span class="bg-snow text-hermes px-3 py-1 rounded-full text-sm font-bold shadow">航班: BR257/258</span>
+        </div>
+    </div>
+
+    <!-- Day 1 -->
+    <div class="px-4 mb-6">
+        <div class="k-card p-5">
+            <div class="flex items-center justify-between mb-4 border-b-2 border-bglight pb-2">
+                <h2 class="text-xl font-bold text-hermes"><i class="fa-solid fa-calendar-day mr-2"></i>Day 1</h2>
+                <span class="text-sm font-bold text-coffee opacity-60">古城巡禮 & 網美打卡</span>
+            </div>
+            
+            <ul class="space-y-4 mb-4">
+                <li class="flex items-start">
+                    <i class="fa-solid fa-location-dot mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">桃園機場 → 清邁 → 蘭娜古城之旅</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                        <p class="text-sm text-gray-500">(建都三王紀念像、大塔寺、水果街)</p>
+                        <div class="flex gap-1 mt-1"><span class="tag bg-orange-100 text-hermes">#景點</span> <span class="tag bg-yellow-100 text-yellow-700">#必拍</span></div>
+                        <div class="bg-bglight p-2 rounded-xl mt-2 text-xs">
+                            <p>💡 <b>拍照小技巧：</b>清晨光線最柔和，適合拍古建築；大塔寺需注意服裝儀容。</p>
+                            <p>🚗 <b>停車資訊：</b>古城區停車較難，建議搭乘雙條車或嘟嘟車。</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-camera-retro mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">塔佩門古城牆拍照打卡</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                        <div class="flex gap-1 mt-1"><span class="tag bg-orange-100 text-hermes">#景點</span> <span class="tag bg-yellow-100 text-yellow-700">#必拍</span></div>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-mug-hot mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">MARS.cnx 火星咖啡廳</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                        <p class="text-sm text-gray-500">(泰國網紅咖啡廳，贈送每人一杯飲品)</p>
+                        <div class="flex gap-1 mt-1"><span class="tag bg-red-100 text-red-600">#食物</span> <span class="tag bg-yellow-100 text-yellow-700">#必拍</span></div>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-bag-shopping mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">MAYA百貨公司 & THE ONE NIMMAN</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                        <div class="flex gap-1 mt-1"><span class="tag bg-purple-100 text-purple-600">#購物</span> <span class="tag bg-pink-100 text-pink-600">#必買</span></div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="bg-gray-50 rounded-2xl p-3 text-sm space-y-2 border border-gray-100">
+                <p><i class="fa-solid fa-utensils text-hermes w-5"></i> <b>午餐：</b>Grand View或 Plubpla Buffet 宫廷自助餐 THB250</p>
+                <p><i class="fa-solid fa-utensils text-hermes w-5"></i> <b>晚餐：</b>米其林推薦Ajarn Saiyud's Kitchen THB500</p>
+            </div>
+            
+            <div class="mt-4 text-center text-xs text-coffee bg-orange-50 rounded-xl p-2">
+                👗 <b>建議穿著：</b>12月底清邁早晚微涼，建議洋蔥式短袖＋薄外套。 | ☀️ <b>天氣：</b>乾季晴朗舒適。
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="px-4 mb-6">
+        <div class="k-card p-5">
+            <div class="flex items-center justify-between mb-4 border-b-2 border-bglight pb-2">
+                <h2 class="text-xl font-bold text-hermes"><i class="fa-solid fa-calendar-day mr-2"></i>Day 2</h2>
+                <span class="text-sm font-bold text-coffee opacity-60">生態體驗 & 週末市集</span>
+            </div>
+            
+            <ul class="space-y-4 mb-4">
+                <li class="flex items-start">
+                    <i class="fa-solid fa-store mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">真心市集 (周末限定)</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                        <div class="flex gap-1 mt-1"><span class="tag bg-purple-100 text-purple-600">#購物</span></div>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-elephant mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">大象保育營</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                        <p class="text-sm text-gray-500">（象語訓練互動＋體驗大象洗澡＋餵食大象）</p>
+                        <div class="flex gap-1 mt-1"><span class="tag bg-blue-100 text-blue-600">#活動</span></div>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-people-group mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">長頸族村</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-water mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">WAT BAN DEN 藍廟 → 天使瀑布仙境</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-cart-shopping mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">週日假日市集 (周末限定)</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="bg-gray-50 rounded-2xl p-3 text-sm space-y-2 border border-gray-100">
+                <p><i class="fa-solid fa-utensils text-hermes w-5"></i> <b>午餐：</b>園區自助餐</p>
+                <p><i class="fa-solid fa-utensils text-hermes w-5"></i> <b>晚餐：</b>米其林推薦-紅橋餐廳THB500</p>
+            </div>
+            
+            <div class="mt-4 text-center text-xs text-coffee bg-orange-50 rounded-xl p-2">
+                👗 <b>建議穿著：</b>玩水與市集行程，建議穿著速乾衣物與好走平底鞋。
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="px-4 mb-6">
+        <div class="k-card p-5">
+            <div class="flex items-center justify-between mb-4 border-b-2 border-bglight pb-2">
+                <h2 class="text-xl font-bold text-hermes"><i class="fa-solid fa-calendar-day mr-2"></i>Day 3</h2>
+                <span class="text-sm font-bold text-coffee opacity-60">蘭納風情 & 夜間探險</span>
+            </div>
+            
+            <ul class="space-y-4 mb-4">
+                <li class="flex items-start">
+                    <i class="fa-solid fa-leaf mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">蘭納風格蘭谷莊園</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                        <p class="text-xs text-gray-500">(泰服體驗清邁城堡式小白廟拍拍網美照等)</p>
+                        <div class="flex gap-1 mt-1"><span class="tag bg-blue-100 text-blue-600">#活動</span></div>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <i class="fa-solid fa-moon mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">清邁夜間動物園</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                        <div class="flex gap-1 mt-1"><span class="tag bg-orange-100 text-hermes">#景點</span></div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="bg-gray-50 rounded-2xl p-3 text-sm space-y-2 border border-gray-100">
+                <p><i class="fa-solid fa-utensils text-hermes w-5"></i> <b>午餐：</b>泰式風味餐THB350</p>
+                <p><i class="fa-solid fa-utensils text-hermes w-5"></i> <b>晚餐：</b>黑森林餐廳料理 B.500</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 4 -->
+    <div class="px-4 mb-6">
+        <div class="k-card p-5">
+            <div class="flex items-center justify-between mb-4 border-b-2 border-bglight pb-2">
+                <h2 class="text-xl font-bold text-hermes"><i class="fa-solid fa-calendar-day mr-2"></i>Day 4</h2>
+                <span class="text-sm font-bold text-coffee opacity-60">全日自由放鬆</span>
+            </div>
+            
+            <ul class="space-y-4 mb-4">
+                <li class="flex items-start">
+                    <i class="fa-solid fa-spa mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">酒店內自由活動</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                        <div class="flex gap-1 mt-1"><span class="tag bg-green-100 text-green-700">#酒店</span></div>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="bg-gray-50 rounded-2xl p-3 text-sm space-y-2 border border-gray-100">
+                <p><i class="fa-solid fa-utensils text-hermes w-5"></i> <b>午餐：</b>敬請自理</p>
+                <p><i class="fa-solid fa-utensils text-hermes w-5"></i> <b>晚餐：</b>酒店內用餐THB600</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day 5 -->
+    <div class="px-4 mb-8">
+        <div class="k-card p-5">
+            <div class="flex items-center justify-between mb-4 border-b-2 border-bglight pb-2">
+                <h2 class="text-xl font-bold text-hermes"><i class="fa-solid fa-calendar-day mr-2"></i>Day 5</h2>
+                <span class="text-sm font-bold text-coffee opacity-60">滿載而歸</span>
+            </div>
+            
+            <ul class="space-y-4 mb-4">
+                <li class="flex items-start">
+                    <i class="fa-solid fa-plane-arrival mt-1 text-hermes w-6"></i>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <p class="font-bold spot-title">飯店 → 清邁機場 → 桃園機場</p>
+                            <button onclick="editSpot(this)" class="text-gray-300 hover:text-hermes transition px-2"><i class="fa-solid fa-pen-to-square"></i></button>
+                        </div>
+                        <div class="flex gap-1 mt-1"><span class="tag bg-gray-200 text-gray-700">#交通</span></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="text-center mt-6 mb-4 text-coffee text-sm font-bold opacity-70 pb-10">
+            <p>Made with ❤️ by 小龍</p>
+            <p class="mt-1 text-xs">世興旅行社 專屬為您策劃</p>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="fixed bottom-0 w-full max-w-[480px] bg-white border-t border-gray-100 rounded-t-3xl shadow-[0_-5px_20px_rgba(0,0,0,0.05)] z-50">
+        <div class="flex justify-around items-center p-4 text-coffee">
+            <button class="flex flex-col items-center text-hermes">
+                <i class="fa-solid fa-map-location-dot text-xl mb-1"></i>
+                <span class="text-[10px] font-bold">行程</span>
+            </button>
+            <button class="flex flex-col items-center opacity-50 hover:opacity-100 hover:text-hermes transition">
+                <i class="fa-solid fa-bed text-xl mb-1"></i>
+                <span class="text-[10px] font-bold">住宿</span>
+            </button>
+            <button class="flex flex-col items-center opacity-50 hover:opacity-100 hover:text-hermes transition">
+                <i class="fa-solid fa-phone text-xl mb-1"></i>
+                <span class="text-[10px] font-bold">導遊</span>
+            </button>
+            <button class="flex flex-col items-center opacity-50 hover:opacity-100 hover:text-hermes transition">
+                <i class="fa-solid fa-file-invoice text-xl mb-1"></i>
+                <span class="text-[10px] font-bold">備忘錄</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showToast() {
+        const toast = document.getElementById("toast");
+        toast.className = "show";
+        setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 2500);
+    }
+
+    function editSpot(button) {
+        // 找到按鈕旁邊的文字元素
+        const titleElement = button.previousElementSibling;
+        const currentText = titleElement.innerText;
+        
+        // 彈出對話框讓使用者輸入新名稱
+        const newText = prompt("✏️ 請輸入新的景點或行程名稱：", currentText);
+        
+        // 判斷是否有輸入且不為空
+        if (newText !== null && newText.trim() !== "") {
+            // 更新文字
+            titleElement.innerText = newText.trim();
+            // 顯示成功提示
+            showToast();
+        }
+    }
+</script>
+
+</body>
+</html>
